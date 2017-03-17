@@ -15,9 +15,6 @@ class Analyser(object):
     def analyse(self, pdf_text):
         pages_analyzed = map(self.process_page, pdf_text.pages)
         document_analyzed = reduce(lambda d, p: d.add_page(p), pages_analyzed, DocumentAnalyzed())
-
-
-
         return document_analyzed
 
     def process_page(self, page):
