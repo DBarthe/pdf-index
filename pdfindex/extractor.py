@@ -11,11 +11,12 @@ class ExtractorBase(object):
 
 
 class PDFExtractor(object):
-    def __init__(self, stream):
+    def __init__(self, stream, page_offset):
         self.stream = stream
         self.reader = None
         self.pdf_text = None
         self.num_pages = None
+        self.page_offset = page_offset
 
     def extract(self):
         self.reader = PdfFileReader(self.stream)
@@ -29,4 +30,4 @@ class PDFExtractor(object):
     def _extract_page(self, num_page):
         page = self.reader.getPage(num_page)
         raw_text = page.extractText()
-        return PDFPageText(num_page, raw_text)
+        return PDFPageText(num_page + self.page_offset, raw_text)

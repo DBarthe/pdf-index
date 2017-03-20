@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from itertools import groupby
 
 
 class Index(object):
@@ -14,6 +15,9 @@ class Index(object):
 
     def get_index_sorted(self):
         return sorted(self.terms.items(), key=lambda item: item[0])
+
+    def get_index_grouped(self):
+        return list(map(lambda x: (x[0], list(x[1])), groupby(self.get_index_sorted(), lambda x: x[0][0])))
 
     @staticmethod
     def build(terms, document_analyzed):

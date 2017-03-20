@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import nltk
+from itertools import chain
 
-from pdfindex import tokenizer
+from pdfindex import tokenizer, utils
 import filters
 
 
@@ -9,7 +10,10 @@ class Analyser(object):
     def __init__(self):
         self.tokenizer = tokenizer.WordTokenizer()
         self.filters = [
-            filters.lowercase
+            #filters.debug,
+            filters.lowercase,
+            filters.trim_special_chars,
+            filters.min_length(3)
         ]
 
     def analyse(self, pdf_text):
@@ -20,10 +24,14 @@ class Analyser(object):
     def process_page(self, page):
         tokens = self.tokenizer.tokenize(page.raw_text)
         for f in self.filters:
-            tokens = filter(lambda t: t is not None, map(f, tokens))
+            tokens = Analyser.apply_filter(f, tokens)
         freq_dist = nltk.FreqDist(tokens)
         terms = freq_dist.keys()
         return PageAnalyzed(page, tokens, freq_dist, terms)
+
+    @staticmethod
+    def apply_filter(f, tokens):
+        return filter(lambda t: t is not None and len(t) > 0, utils.flatten(map(f, tokens)))
 
 
 class PageAnalyzed(object):
