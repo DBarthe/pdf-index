@@ -1,7 +1,7 @@
 pdfindex
 ========
 
-PDF-index is a command line tool that find important terms in a PDF document and generate a ready-to-print index.
+PDF-index is a command line tool that find important terms in a PDF document and generates a ready-to-print index.
 
 It relies on PyPDF and NLTK libraries for extracting and mining text.
 
@@ -26,7 +26,7 @@ $ pip install -r requirements.txt
 
 Print usage:
 ```bash
-python pdfindex.py  -h
+$ python pdfindex.py  -h
 usage: pdfindex.py [-h] [-m MIN_SCORE] [-f {html,markdown}] [-p PAGE_OFFSET]
                    input_file output_file
 
