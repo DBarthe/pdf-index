@@ -13,15 +13,15 @@ def lowercase(token):
 
 
 def trim_special_chars(token):
-    def aux(t):
-        return "".join(takewhile(lambda c: c.isalpha(), dropwhile(lambda c: not c.isalpha(), t)))
-    new_token = aux(token)
+    front = dropwhile(lambda c: not c.isalpha(), token)
+    new_token = "".join(takewhile(lambda c: c.isalpha(), front))
+    back = dropwhile(lambda c: c.isalpha(), front)
     if len(new_token) == 0:
         return []
     elif new_token == token:
-        return [ new_token ]
+        return [new_token]
     else:
-        tokens = trim_special_chars(token[:len(new_token)])
+        tokens = trim_special_chars("".join(back))
         tokens.append(new_token)
         return tokens
 
