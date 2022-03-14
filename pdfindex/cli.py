@@ -48,6 +48,6 @@ def main():
     terms_selected = chooser.choose(document_analyzed)
     index = Index.build(terms_selected, document_analyzed)
     output = serializer.serialize(index)
-    fout = open(args.output_file, 'w')
+    fout = open(args.output_file, 'wb')
     fout.write(output.encode("utf-8"))
     fout.close()
