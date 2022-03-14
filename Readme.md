@@ -7,26 +7,26 @@ It relies on PyPDF and NLTK libraries for extracting and mining text.
 
 Output formats currently supported are HTML and Markdown.
 
-It works with python 2
+It works with Python 3.
 
 
 Example
 -----
 For generating an html index from the `input.pdf` document to `output.html`, selecting terms with a minimum score of 0.2:
 ```bash
-$ python pdfindex.py --min-score 0.2 --format html input.pdf output.html
+$ python3 pdfindex.py --min-score 0.2 --format html input.pdf output.html
 ```
 
 Usage
 -----
 Within a virtualenv:
 ```bash
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 Print usage:
 ```bash
-$ python pdfindex.py  -h
+$ python3 pdfindex.py -h
 usage: pdfindex.py [-h] [-m MIN_SCORE] [-f {html,markdown}] [-p PAGE_OFFSET]
                    input_file output_file
 
@@ -46,5 +46,3 @@ optional arguments:
   -p PAGE_OFFSET, --page-offset PAGE_OFFSET
                         the start of page numbering
 ```
-
-
