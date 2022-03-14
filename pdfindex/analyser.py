@@ -9,6 +9,7 @@ from functools import reduce
 
 class Analyser(object):
     def __init__(self):
+        nltk.download("punkt")
         self.tokenizer = tokenizer.WordTokenizer()
         self.filters = [
             #filters.debug,
