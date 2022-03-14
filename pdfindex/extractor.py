@@ -22,7 +22,7 @@ class PDFExtractor(object):
         self.reader = PdfFileReader(self.stream)
         self.pdf_text = PDFText()
         self.num_pages = self.reader.getNumPages()
-        for num_page in xrange(self.num_pages):
+        for num_page in range(self.num_pages):
             page = self._extract_page(num_page)
             self.pdf_text.add_page(page)
         return self.pdf_text
