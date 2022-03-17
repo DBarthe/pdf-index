@@ -14,10 +14,10 @@ class Index(object):
         self.terms[term].append(page_num)
 
     def get_index_sorted(self):
-        return sorted(self.terms.items(), key=lambda item: item[0])
+        return sorted(list(self.terms.items()), key=lambda item: item[0])
 
     def get_index_grouped(self):
-        return list(map(lambda x: (x[0], list(x[1])), groupby(self.get_index_sorted(), lambda x: x[0][0])))
+        return list([(x[0], list(x[1])) for x in groupby(self.get_index_sorted(), lambda x: x[0][0])])
 
     @staticmethod
     def build(terms, document_analyzed):
@@ -25,7 +25,7 @@ class Index(object):
         for term in terms:
             index.add_term(term)
             for page_analysed in document_analyzed.pages:
-                if page_analysed.freq_dist.has_key(term):
+                if term in page_analysed.freq_dist:
                     index.add_occurrence(term, page_analysed.page.num_page)
         return index
 

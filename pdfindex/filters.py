@@ -4,7 +4,7 @@ from itertools import takewhile, dropwhile
 
 
 def debug(token):
-    print token
+    print(token)
     return token
 
 

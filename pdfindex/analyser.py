@@ -3,11 +3,13 @@ import nltk
 from itertools import chain
 
 from pdfindex import tokenizer, utils
-import filters
+from . import filters
+from functools import reduce
 
 
 class Analyser(object):
     def __init__(self):
+        nltk.download("punkt")
         self.tokenizer = tokenizer.WordTokenizer()
         self.filters = [
             #filters.debug,
@@ -17,7 +19,7 @@ class Analyser(object):
         ]
 
     def analyse(self, pdf_text):
-        pages_analyzed = map(self.process_page, pdf_text.pages)
+        pages_analyzed = list(map(self.process_page, pdf_text.pages))
         document_analyzed = reduce(lambda d, p: d.add_page(p), pages_analyzed, DocumentAnalyzed())
         return document_analyzed
 
@@ -26,12 +28,12 @@ class Analyser(object):
         for f in self.filters:
             tokens = Analyser.apply_filter(f, tokens)
         freq_dist = nltk.FreqDist(tokens)
-        terms = freq_dist.keys()
+        terms = list(freq_dist.keys())
         return PageAnalyzed(page, tokens, freq_dist, terms)
 
     @staticmethod
     def apply_filter(f, tokens):
-        return filter(lambda t: t is not None and len(t) > 0, utils.flatten(map(f, tokens)))
+        return [t for t in utils.flatten(list(map(f, tokens))) if t is not None and len(t) > 0]
 
 
 class PageAnalyzed(object):
